@@ -1,0 +1,15 @@
+type Result = 
+ variant {
+   err: text;
+   ok;
+ };
+service : {
+  balanceOf: (principal) -> (nat) query;
+  balanceOfArray: (vec principal) -> (vec nat) query;
+  burn: (principal, nat) -> (Result);
+  mint: (principal, nat) -> (Result);
+  tokenName: () -> (text) query;
+  tokenSymbol: () -> (text) query;
+  totalSupply: () -> (nat) query;
+  transfer: (principal, principal, nat) -> (Result);
+}

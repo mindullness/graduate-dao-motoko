@@ -1,0 +1,85 @@
+type Vote = 
+ record {
+   member: principal;
+   votingPower: nat;
+   yesOrNo: bool;
+ };
+type Time = int;
+type Role = 
+ variant {
+   Graduate;
+   Mentor;
+   Student;
+ };
+type Result_3 = 
+ variant {
+   err: text;
+   ok: ProposalId;
+ };
+type Result_2 = 
+ variant {
+   err: text;
+   ok: Member;
+ };
+type Result_1 = 
+ variant {
+   err: text;
+   ok: Proposal;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok;
+ };
+type ProposalStatus = 
+ variant {
+   Accepted;
+   Open;
+   Rejected;
+ };
+type ProposalId__1 = nat;
+type ProposalId = nat;
+type ProposalContent__1 = 
+ variant {
+   AddGoal: text;
+   AddMentor: principal;
+   ChangeManifesto: text;
+ };
+type ProposalContent = 
+ variant {
+   AddGoal: text;
+   AddMentor: principal;
+   ChangeManifesto: text;
+ };
+type Proposal = 
+ record {
+   content: ProposalContent;
+   created: Time;
+   creator: principal;
+   executed: opt Time;
+   id: ProposalId__1;
+   status: ProposalStatus;
+   voteScore: int;
+   votes: vec Vote;
+ };
+type Member = 
+ record {
+   name: text;
+   role: Role;
+ };
+service : {
+  /// 3. Proposal Creation - Create a new proposal and returns its id *
+  createProposal: (ProposalContent__1) -> (Result_3);
+  getAllProposal: () -> (vec Proposal) query;
+  getGoals: () -> (vec text) query;
+  getIdWebpage: () -> (principal) query;
+  getManifesto: () -> (text) query;
+  getMember: (principal) -> (Result_2) query;
+  getName: () -> (text) query;
+  getProposal: (ProposalId) -> (Result_1) query;
+  graduate: (principal) -> (Result);
+  /// Requirement 1-2. Membership and Token Allocation and Role System *
+  registerMember: (text) -> (Result);
+  /// 4. Voting System - Vote for the given proposal *
+  voteProposal: (ProposalId, bool) -> (Result);
+}

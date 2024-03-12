@@ -1,0 +1,32 @@
+// Version: 1.0.0
+type Member = {name : Text; role : Role};
+type Member__1 = Member;
+type Proposal =
+  {
+    content : ProposalContent;
+    created : Time;
+    creator : Principal;
+    executed : ?Time;
+    id : ProposalId;
+    status : ProposalStatus;
+    voteScore : Int;
+    votes : [Vote]
+  };
+type ProposalContent =
+  {#AddGoal : Text; #AddMentor : Principal; #ChangeManifesto : Text};
+type ProposalId = Nat;
+type ProposalId__1 = ProposalId;
+type ProposalStatus = {#Accepted; #Open; #Rejected};
+type Proposal__1 = Proposal;
+type Role = {#Graduate; #Mentor; #Student};
+type Time = Int;
+type Vote = {member : Principal; votingPower : Nat; yesOrNo : Bool};
+actor {
+  stable canisterIdWebpage : Principal;
+  stable var goals : [Text];
+  stable var manifesto : Text;
+  stable var memberEntries : [(Principal, Member__1)];
+  stable name : Text;
+  stable var nextId : Nat;
+  stable var proposalEntries : [(ProposalId__1, Proposal__1)]
+};
